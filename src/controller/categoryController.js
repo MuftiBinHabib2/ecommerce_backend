@@ -127,7 +127,10 @@ let allCategoryController = async(req,res)=>{
 
     try {
 
-        let allcategory = await categoryModel.find({})
+        let allcategory = await categoryModel.find({}).populate({
+          path : "subcategory",
+          select: "name slug"
+        })
 
         return res.status(200).json({success:true, message: "category fetch successful", data: allcategory})
         
@@ -135,6 +138,8 @@ let allCategoryController = async(req,res)=>{
         return res.status(500).json({success: false, message: error.message || error })
     }
 }
+
+
 
 module.exports = {
   addCategoryController,
