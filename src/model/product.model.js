@@ -7,6 +7,10 @@ const productSchema = new mongoose.Schema(
       required: [true, "name is required"],
       unique: true,
     },
+    image: {
+      type: Array,
+      required: [true, "image is required"],
+    },
     description: {
       type: String,
       required: [true, "description is required"],
@@ -32,21 +36,19 @@ const productSchema = new mongoose.Schema(
     reviews: [
       {
         type: String,
+      },
+    ],
 
-      }
-    ] ,
-    
-    variantType:{
-        type:String,
-        enum:["singleVariant", "multiVariant"]
+    variantType: {
+      type: String,
+      enum: ["singleVariant", "multiVariant"],
     },
     variants: [
       {
         type: mongoose.Types.ObjectId,
-        ref:"Variant"  
-      }
-    ]
-    
+        ref: "Variant",
+      },
+    ],
   },
   { timestamps: true }
 );
