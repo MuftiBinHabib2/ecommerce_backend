@@ -1,13 +1,17 @@
 const { default: mongoose } = require("mongoose");
 const bcrypt =require('bcrypt');
-const variantSchema = new mongoose.Schema({
-    
+const variantSchema = new mongoose.Schema(
+    {
+    product:{
+      type: mongoose.Types.ObjectId,
+      ref: "Product"
+    },
      size: {
         type: String,
-        unique:true
+        
     },
     stock:{
-        type:Number
+        type:Number, default : 0
     }
    
 }, {timestamps:true})
