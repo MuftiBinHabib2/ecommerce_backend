@@ -91,6 +91,23 @@ const singleusercartController = async (req,res)=>{
     }
 }
 
+const updatequantityController = async (req,res) =>{
+    try {
+
+        let {quantity} = req.body
+        let {id} = req.params;
+
+        let product = await cartModel.findOneAndUpdate({product:id}, {quantity}, {new:true})
+
+        return res.status(200).json({success:true, message:"updated quantity", product})
+
+    } catch (error) {
+          return res
+      .status(500)
+      .json({ success: false, message: error.message || error });
+    }
+}
+
 module.exports = {addtocartController, getAllCartListController,
-    singleusercartController
+    singleusercartController, updatequantityController
 }
