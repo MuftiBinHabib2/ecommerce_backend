@@ -54,7 +54,8 @@ const orderSchema = new mongoose.Schema(
     },
     orderstatus:{
         type:String,
-        enum:["pending", "cancelled", "delivered"]
+        enum:["pending", "cancelled", "delivered"],
+        default:"pending"
     },
     trnd_id:{
         type:String
