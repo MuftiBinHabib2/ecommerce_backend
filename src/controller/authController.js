@@ -92,7 +92,7 @@ const loginController = async (req, res , next) =>{
 
     bcrypt.compare(password, user.password, function(err, result) {
     if (result){
-      let token = jwt.sign({ email: user.email, role: user.role  }, process.env.PRIVATE_KEY, { expiresIn: "2m"});
+      let token = jwt.sign({ email: user.email, role: user.role  }, process.env.PRIVATE_KEY, { expiresIn: "10m"});
      return res.status(200).json({success: true, message:"login successful", data:user, token})
      
     }else{
@@ -122,7 +122,21 @@ const alluserController = async (req,res,next)=>{
   
 }
 
+const verifyUserController = async (req,res)=>{
+let {token} = req.headers
+          jwt.verify(token, process.env.PRIVATE_KEY, async function(err, decoded) {
+    if(err){
+      return res.status(400).json({ success : false, message: err.message })
+  
+    } else {
+     let user = await userModel.findOne({email:decoded.email})
+
+     return res.status(200).json({success:true, message:"user verify successful", data:user})
+    }
+  });
+}
 
 
 
-module.exports = { signupController, verifyOtpController ,loginController , alluserController};
+
+module.exports = { signupController, verifyOtpController ,loginController , alluserController, verifyUserController};
