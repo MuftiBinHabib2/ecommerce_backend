@@ -130,8 +130,9 @@ let {token} = req.headers
   
     } else {
      let user = await userModel.findOne({email:decoded.email})
+     let token = jwt.sign({ email: user.email, role: user.role  }, process.env.PRIVATE_KEY, { expiresIn: "10m"});
 
-     return res.status(200).json({success:true, message:"user verify successful", data:user})
+     return res.status(200).json({success:true, message:"user verify successful", data:user , token})
     }
   });
 }
